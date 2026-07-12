@@ -1,0 +1,11 @@
+DBEAutoPilot is a derived work of the PixInsight Class Library (PCL) and is
+released under the PixInsight Class Library License Version 2.0.
+
+Full license text: https://pixinsight.com/license/PCL-License-2.0.html
+
+The built-in nebula catalogue's coordinate data is generated from VizieR
+catalogues (Sharpless / LBN / vdB / Cederblad); follow CDS/VizieR citation
+rules when redistributing. Survey prior data (e.g. the Finkbeiner 2003 Halpha
+map, NASA LAMBDA) is obtained by the user under its own terms.
+
+Copyright (c) 2026. All rights reserved where applicable.
