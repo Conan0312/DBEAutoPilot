@@ -85,9 +85,17 @@ DBEAutoPilot（`_DBE_P`）：
 
 ## 安裝方式
 
-**需求**：PixInsight 1.8.9 以上（建議 1.9.3+）、Windows 64-bit。
+**需求**：Windows 64-bit，且 PixInsight 版本須與下載的 Release 相符。
+PixInsight 模組綁定編譯時的核心 API 版本，版本不符會在安裝時出現
+`Unsupported API version` 錯誤：
 
-從 Releases 下載 `DBEAutoPilot-<版本>-manual-install-win-x64.zip`，解壓後內容：
+| 你的 PixInsight | 下載這個 Release |
+|---|---|
+| **1.9.6** | [v0.4.2-pi196](https://github.com/Conan0312/DBEAutoPilot/releases/tag/v0.4.2-pi196)（最新） |
+| 1.9.3 | [v0.1.0](https://github.com/Conan0312/DBEAutoPilot/releases/tag/v0.1.0)（功能與 0.4.2 相同，僅版本標示為 0.1.0） |
+
+從 [Releases](https://github.com/Conan0312/DBEAutoPilot/releases) 下載
+`DBEAutoPilot-<版本>-manual-install-win-x64.zip`，解壓後內容：
 
 ```
 DBEAutoPilot-pxm.dll     模組本體（Windows x64）
@@ -121,8 +129,16 @@ PixInsight 的模組簽章（`.xsgn`）綁定**簽章者本人的授權與機器
 1. 開啟 PixInsight → 選單 **SCRIPT → Execute Script File...**
 2. 選擇壓縮包內的 `sign-module.js`。
 3. 出現檔案選擇視窗後，選你在步驟 1 複製到 bin 的 `DBEAutoPilot-pxm.dll`。
-4. Console 出現 **SUCCESS** 即完成——DLL 旁會多出 `DBEAutoPilot-pxm.xsgn`。
-5. 回到步驟 2 重新安裝，並重新啟動 PixInsight。
+4. Console 出現 **SUCCESS** 即完成——DLL 旁會多出 `DBEAutoPilot-pxm.xsgn` 與
+   `local-signing-keys.xssk`。
+5. **登錄你的簽章身分**（只需做一次；PixInsight 升版後要再做一次）：
+   1. 選單 **EDIT → Local Signing Identity...**（在 EDIT 選單、靠近 Purge Clipboard）
+   2. 選擇 DLL 旁的 `local-signing-keys.xssk`，輸入金鑰密碼（`sign-module.js` 開頭的 `KEYS_PWD`）。
+   3. 勾選 **Make the local signing identity persistent** → OK。
+   4. **完整關閉 PixInsight 再重新開啟。**
+
+   沒做這一步，安裝時會出現 `Unknown code signing identity` 錯誤。
+6. 回到步驟 2 重新安裝，並重新啟動 PixInsight。
 
 **說明**：
 
@@ -138,6 +154,8 @@ PixInsight 的模組簽章（`.xsgn`）綁定**簽章者本人的授權與機器
 
 | 症狀 | 處置 |
 |---|---|
+| 安裝時出現 `Unknown code signing identity` | 簽章身分尚未登錄（或 PixInsight 升版後被重設）——做步驟 3 的第 5 點 |
+| 安裝時出現 `Unsupported API version` | PixInsight 版本與 Release 不符——依上方對照表下載對應版本 |
 | 安裝後 Process Explorer 找不到模組 | 確認有「完整關閉再重開」PixInsight |
 | sign-module.js 沒出現 SUCCESS | 把 Console 完整輸出與 bin 內 `sign-module.log`（若有）回報給開發者 |
 | 其他問題 | 附上 PixInsight 版本（Help → About）、Windows 版本與安裝時 Console 的完整訊息 |
@@ -346,9 +364,18 @@ of both modes —
 
 ## Installation
 
-**Requirements**: PixInsight 1.8.9 or later (1.9.3+ recommended), Windows 64-bit.
+**Requirements**: Windows 64-bit, and your PixInsight version must match the
+Release you download. PixInsight modules are bound to the core API version they
+were built against; a mismatch fails at install time with
+`Unsupported API version`:
 
-Download `DBEAutoPilot-<version>-manual-install-win-x64.zip` from Releases. Contents:
+| Your PixInsight | Download this Release |
+|---|---|
+| **1.9.6** | [v0.4.2-pi196](https://github.com/Conan0312/DBEAutoPilot/releases/tag/v0.4.2-pi196) (latest) |
+| 1.9.3 | [v0.1.0](https://github.com/Conan0312/DBEAutoPilot/releases/tag/v0.1.0) (same features as 0.4.2; labelled 0.1.0) |
+
+Download `DBEAutoPilot-<version>-manual-install-win-x64.zip` from
+[Releases](https://github.com/Conan0312/DBEAutoPilot/releases). Contents:
 
 ```
 DBEAutoPilot-pxm.dll     the module (Windows x64)
@@ -387,9 +414,17 @@ the module with **your** license:
 1. Open PixInsight → menu **SCRIPT → Execute Script File...**
 2. Select `sign-module.js` from the package.
 3. A file dialog opens: select the `DBEAutoPilot-pxm.dll` you copied to bin in step 1.
-4. When the console prints **SUCCESS**, a `DBEAutoPilot-pxm.xsgn` file has been
-   created next to the DLL.
-5. Repeat step 2 (install) and restart PixInsight.
+4. When the console prints **SUCCESS**, `DBEAutoPilot-pxm.xsgn` and
+   `local-signing-keys.xssk` have been created next to the DLL.
+5. **Register your signing identity** (once; again after every PixInsight upgrade):
+   1. Menu **EDIT → Local Signing Identity...** (in the EDIT menu, near Purge Clipboard)
+   2. Select `local-signing-keys.xssk` next to the DLL and enter the key password
+      (`KEYS_PWD` at the top of `sign-module.js`).
+   3. Check **Make the local signing identity persistent** → OK.
+   4. **Fully close and reopen PixInsight.**
+
+   Without this step, installation fails with `Unknown code signing identity`.
+6. Repeat step 2 (install) and restart PixInsight.
 
 **Notes**:
 
@@ -407,6 +442,8 @@ the module with **your** license:
 
 | Symptom | Action |
 |---|---|
+| Install fails with `Unknown code signing identity` | Signing identity not registered (or reset by a PixInsight upgrade) — do step 3, item 5 |
+| Install fails with `Unsupported API version` | PixInsight version does not match the Release — download the matching one from the table above |
 | Module missing from Process Explorer after install | Make sure you fully closed and reopened PixInsight |
 | sign-module.js did not print SUCCESS | Send the full console output plus `sign-module.log` from the bin folder (if present) to the developer |
 | Anything else | Include your PixInsight version (Help → About), Windows version, and the full console messages from the installation |
